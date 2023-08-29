@@ -2,8 +2,8 @@
 
 void computeLPS(const std::string& str, int* lps)
 {
-	int j = 0;
-	int i = 1;
+	size_t j = 0;
+	size_t i = 1;
 	lps[0] = 0;
 	
 	while (i < str.length())
@@ -35,20 +35,22 @@ bool isKPeriodic(const std::string& str, int K)
 
 	computeLPS(str, lps);
 
-	if (K == str.length() - lps[str.length() - 1])
+	if (K == str.length() - lps[str.length() - 1] && lps[K*2 - 1] == K || 
+
+		lps[str.length() - 1] != 0 && str.length() % K == 0 && lps[str.length() - 1] % K != 0)
 	{
 		std::cout << "the string is a multiple of K" << std::endl;
 		return true;
 	}
+
 	else
 	{
 		std::cout << "the string is NOT multiple of K!" << std::endl;
 		return false;
 	}
-}
-	
 
-	
+	delete[]lps;
+}
 	
 
 int main()
@@ -70,6 +72,11 @@ int main()
 		std::cout << "Input K for checking string" << std::endl;
 
 		std::cin >> K;
+
+		if (K == 0)
+		{
+			return false;
+		}
 
 		isKPeriodic(str, K);
 	}
